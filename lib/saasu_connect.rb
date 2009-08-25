@@ -22,6 +22,7 @@ require 'contact_category'
 require 'transaction_category'
 require 'item_invoice_item'
 require 'service_invoice_item'
+require 'inventory_item'
 
 $LOAD_PATH.shift
 

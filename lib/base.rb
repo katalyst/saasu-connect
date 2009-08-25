@@ -351,7 +351,7 @@ module SaasuConnect
 					if self.primary_key != nil && self.attributes[self.primary_key] != nil && !@complete_download
 						if self.attributes[method] == nil
 							# I'm worried about the face I need to include a to_i, it should be already cast
-							self.attributes = SaasuConnect.const_get(name).find(self.attributes[self.primary_key].to_i, { :access_key => self.access_key, :file_uid => self.file_uid }).attributes
+							self.attributes = SaasuConnect.const_get(name).find(self.attributes[self.primary_key].to_i).attributes
 							@complete_download = true
 						end
 					end

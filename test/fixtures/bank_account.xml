@@ -6,7 +6,7 @@
       <name>ANZ</name>
       <isActive>true</isActive>
 	  <displayName>ANZ</displayName>
-	  <bsb>111 111</bsb>
+	  <bsb>111111</bsb>
 	  <accountNumber>1111 1111</accountNumber>
     </bankAccount>
   </insertBankAccount>
@@ -16,7 +16,7 @@
 	  <name>CBA</name>
 	  <isActive>false</isActive>
 	  <displayName>Commonwealth Bank</displayName>
-	  <bsb>333 333</bsb>
+	  <bsb>333333</bsb>
 	  <accountNumber>3333 3333</accountNumber>
 	</bankAccount>
   </insertBankAccount>

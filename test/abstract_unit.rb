@@ -24,11 +24,11 @@ class Test::Unit::TestCase
 
 	def clear_fixtures(endpoint)
 		if endpoint == :invoice
-			uri = URI.parse("https://secure.saasu.com/sandbox/webservices/rest/r1/#{endpoint.to_s.camelize}List?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}&transactionType=S")
+			uri = URI.parse("https://secure.saasu.com/webservices/rest/r1/#{endpoint.to_s.camelize}List?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}&transactionType=S")
 		elsif endpoint == :purchase_invoice
-			uri = URI.parse("https://secure.saasu.com/sandbox/webservices/rest/r1/InvoiceList?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}&transactionType=P")
+			uri = URI.parse("https://secure.saasu.com/webservices/rest/r1/InvoiceList?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}&transactionType=P")
 		else
-			uri = URI.parse("https://secure.saasu.com/sandbox/webservices/rest/r1/#{endpoint.to_s.camelize}List?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}")
+			uri = URI.parse("https://secure.saasu.com/webservices/rest/r1/#{endpoint.to_s.camelize}List?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}")
 		end
 
 		http = Net::HTTP.new(uri.host, uri.port)
@@ -41,7 +41,7 @@ class Test::Unit::TestCase
 			doc = Document.new(xml)
 			
 			XPath.each(doc.root, "/#{endpoint.to_s.camelize(:lower)}ListResponse/#{endpoint.to_s.camelize(:lower)}List/#{endpoint.to_s.camelize(:lower)}ListItem/#{endpoint.to_s.camelize(:lower)}Uid") { |child|
-				uri = URI.parse("https://secure.saasu.com/sandbox/webservices/rest/r1/#{endpoint.to_s.camelize(:lower)}?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}&uid=#{child.text}")
+				uri = URI.parse("https://secure.saasu.com/webservices/rest/r1/#{endpoint.to_s.camelize(:lower)}?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}&uid=#{child.text}")
 				http = Net::HTTP.new(uri.host, uri.port)
 				http.use_ssl = true
 				http.delete(uri.path + "?" + uri.query)
@@ -85,7 +85,7 @@ class Test::Unit::TestCase
 			data = doc.to_s
 		end
 
-		uri = URI.parse("https://secure.saasu.com/sandbox/webservices/rest/r1/tasks?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}")
+		uri = URI.parse("https://secure.saasu.com/webservices/rest/r1/tasks?wsaccesskey=#{SAASU_ACCESS_KEY}&FileUid=#{SAASU_FILE_UID}")
 			
 		http = Net::HTTP.new(uri.host, uri.port)
 		http.use_ssl = true

@@ -1,6 +1,6 @@
 module SaasuConnect
 	class Base
-		class ArgumentError < Error
+		class ArgumentException < Error
 			@message = "Invalid Argument"
 		end
 	end

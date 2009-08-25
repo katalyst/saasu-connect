@@ -8,11 +8,12 @@ module SaasuConnect
 			@access_key = access_key || SAASU_ACCESS_KEY	
 			@file_uid = file_uid || SAASU_FILE_UID
 			@host = 'https://secure.saasu.com'
+			@api = '/webservices/rest/r1'
 
-			if (defined?(SAASU_ENV) && SAASU_ENV == 'production') || RAILS_ENV == 'production'
-				@api = '/webservices/rest/r1'
+		  if defined? RAILS_DEFAULT_LOGGER
+				@logger = RAILS_DEFAULT_LOGGER
 			else
-				@api = '/sandbox/webservices/rest/r1'
+				@logger = Logger.new(STDOUT)
 			end
 		end
 
@@ -68,10 +69,12 @@ module SaasuConnect
 	  
 		# Does an HTTP GET on a given URL and returns the response body
 		def http_get(url)
+			@logger.debug('GETing: ' + url)
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
 			response = http.get(uri.path + "?" + uri.query)
+			@logger.debug("Response: "+response.body.to_s)
 			
 			case response
 			when Net::HTTPSuccess
@@ -83,11 +86,14 @@ module SaasuConnect
 		end
 
 		def http_post(url, data)
+			@logger.debug('POSTing: ' + url)
+			@logger.debug('Data: ' + data)
 			uri = URI.parse(url)
 			
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
 			response = http.request_post(uri.path + "?" + uri.query, data)
+			@logger.debug("Response: "+response.body.to_s)
 
 			case response
 			when Net::HTTPSuccess
@@ -98,6 +104,8 @@ module SaasuConnect
 		end
 
 		def http_put(url, data)
+			@logger.debug('PUTing: ' + url)
+			@logger.debug('Data: ' + data)
 			# this doesn't work
 			uri = URI.parse(url)
 			
@@ -108,14 +116,17 @@ module SaasuConnect
 			req.set_form_data(data)
 
 			response = http.start { |http| http.request(req) }
+			@logger.debug("Response: "+response.body.to_s)
 			response.body.to_s
 		end
 
 		def http_delete(url)
+			@logger.debug('DELETEing: ' + url)
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
 			response = http.delete(uri.path + "?" + uri.query)
+			@logger.debug("Response: "+response.body.to_s)
 			response.body.to_s
 		end
 	  

@@ -1,5 +1,5 @@
 module SaasuConnect
-	class InventoryItem
+	class InventoryItem < Base
 		has_many :item_invoice_items
 		def initialize(data = nil)
 			self.fields = ActiveSupport::OrderedHash.new
@@ -12,7 +12,6 @@ module SaasuConnect
 			self.fields[:notes] = :string
 			self.fields[:is_inventoried] = :bool
 			self.fields[:asset_account_uid] = :int
-			self.fields[:stock_on_hold] = :float
 			self.fields[:current_value] = :float
 			self.fields[:is_bought] = :bool
 			self.fields[:purchase_expense_account_uid] = :int
@@ -25,9 +24,24 @@ module SaasuConnect
 			self.fields[:sale_income_account_uid] = :int
 			self.fields[:sale_tax_code] = :string
 			self.fields[:sale_co_s_account_uid] = :int
+
+			self.fields[:utc_first_created] = :date_time
+			self.fields[:utc_last_modified] = :date_time
+
+			self.fields[:stock_on_hand] = :int
+
+			self.fields[:average_cost] = :float
+			self.fields[:selling_price] = :float
+			self.fields[:is_selling_price_inc_tax] = :bool
+			self.fields[:buying_price] = :float
+			self.fields[:is_buying_price_inc_tax] = :bool
 			self.fields[:rrp_incl_tax] = :float
 
-			super(date)
+			self.fields[:quantity_on_order] = :float
+			self.fields[:quantity_committed] = :float
+			self.fields[:is_bought] = :bool
+
+			super(data)
 		end
 	end
 end
