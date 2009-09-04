@@ -74,6 +74,7 @@ module SaasuConnect
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
 			response = http.get(uri.path + "?" + uri.query)
+      @logger.debug("Response class: "+response.class.to_s)
 			@logger.debug("Response: "+response.body.to_s)
 			
 			case response
@@ -93,6 +94,7 @@ module SaasuConnect
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
 			response = http.request_post(uri.path + "?" + uri.query, data)
+      @logger.debug("Response class: "+response.class.to_s)
 			@logger.debug("Response: "+response.body.to_s)
 
 			case response
@@ -116,6 +118,7 @@ module SaasuConnect
 			req.set_form_data(data)
 
 			response = http.start { |http| http.request(req) }
+      @logger.debug("Response class: "+response.class.to_s)
 			@logger.debug("Response: "+response.body.to_s)
 			response.body.to_s
 		end
@@ -126,6 +129,7 @@ module SaasuConnect
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
 			response = http.delete(uri.path + "?" + uri.query)
+      @logger.debug("Response class: "+response.class.to_s)
 			@logger.debug("Response: "+response.body.to_s)
 			response.body.to_s
 		end

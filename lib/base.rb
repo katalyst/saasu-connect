@@ -211,7 +211,7 @@ module SaasuConnect
 		def delete
 			rest = Rest.new(self.access_key, self.file_uid)
 			name = self.class.to_s.split("::").pop
-			response = rest.delete(name.underscore, :uid => self.uid)
+			response = rest.delete(name.underscore.camelize(:lower), :uid => self.uid)
 
 			doc = Document.new(response)
 		
